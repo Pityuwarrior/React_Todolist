@@ -3,8 +3,8 @@ import { NewTodoForm } from "./NewTodoForm"
 import "./style.css"
 import { TodoList } from "./TodoList"
 
-
-const apiURL = process.env.REACT_APP_API_KEY;
+const apiURL = "http://localhost:8000/api/tasks"
+//const apiURL = process.env.REACT_APP_API_KEY;
 
 export interface Todo{
   id: string
@@ -15,21 +15,27 @@ export interface Todo{
 export default function App(){
 
   //This hooks creats a todos list that's going to be filled with values from the "ITEM" json if it's not null
-  const [todos, setTodos] = useState<Todo[]>(() =>{
+  const [todos, setTodos] = useState<Todo[]>([])
     
-    useEffect(() =>{
-      const fetchData = async () => {
-        const data = await fetch(`${apiURL}`)
-        const json = await data.json();
-        console.log(json);
-      }
-    })
-
+  useEffect(() =>{
+    const fetchData = async () => {
+      try{const response = await fetch(`${apiURL}`)
+      const data = await response.json()
+      console.log(data)
+      setTodos(data);
+      }catch (error)
+      {
+        console.error("Error fetching data:", error)
+      }        
+    }
+    fetchData()
+  },[])
+    /*
     const localValue = localStorage.getItem("ITEM")
     if  (localValue == null) return []
 
-    return JSON.parse(localValue)
-  });
+    return JSON.parse(localValue)*/
+
 
   //Every time todos changes the values will be stored in the "ITEMS" json file
   useEffect(() => {

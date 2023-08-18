@@ -1,13 +1,13 @@
 interface Props{
   completed: boolean,
   id: string, 
-  title: string, 
+  task: string, 
   toggleTodo: Function, 
   deleteTodo: Function
 }
 
 //Sending the values to the toggleTodo and deleteTodo when changes occur on the listed items
-export function TodoItem({completed, id, title, toggleTodo, deleteTodo}: Props){
+export function TodoItem({completed, id, task, toggleTodo, deleteTodo}: Props){
   return (
     <li>
       <label>
@@ -16,7 +16,7 @@ export function TodoItem({completed, id, title, toggleTodo, deleteTodo}: Props){
           checked={completed} 
           onChange={e => toggleTodo(id, e.target.checked)} 
         />
-        {title}
+        {task}
       </label>
       <button
         onClick={() => deleteTodo(id)}  
